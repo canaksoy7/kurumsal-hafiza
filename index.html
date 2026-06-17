@@ -5,725 +5,741 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kurumsal Hafıza — VIP & SM Takım</title>
 <style>
-  :root {
-    --navy:#003087; --navy2:#001f5b; --blue:#0050c8; --blue2:#0062d6;
-    --bg:#f0f4fb; --card:#ffffff; --border:#dce5f5; --text:#1e2d45; --muted:#64748b;
-    --warn-bg:#fff8e6; --warn-bd:#f5c842; --info-bg:#e6f7fd; --info-bd:#00a8e0;
-    --step-bg:#eef3fc; --radius:12px; --shadow:0 2px 12px rgba(0,48,135,0.10);
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Mulish',Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+/* ── TEMEL ── */
+:root {
+  --navy:#003087; --navy-l:#e8f0fd;
+  --green:#1a7a4a; --green-l:#e8f7f1;
+  --red:#c2410c; --red-l:#fff1ee;
+  --amber:#b45309; --amber-l:#fef3c7;
+  --purple:#7c3aed; --purple-l:#f3e8ff;
+  --text:#1e2d45; --muted:#64748b; --faint:#94a3b8;
+  --border:#e2e8f0; --bg:#f8fafc; --white:#fff;
+  --r:10px; --shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,48,135,.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6}
 
-  /* TOP BAR */
-  .topbar{background:linear-gradient(135deg,var(--navy2) 0%,var(--navy) 60%,var(--blue) 100%);padding:18px 20px 16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,0.22);}
-  .topbar-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-  .topbar-icon{width:36px;height:36px;background:rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
-  .topbar-title{color:#fff;font-size:16px;font-weight:800;line-height:1.2;}
-  .topbar-sub{color:rgba(255,255,255,0.65);font-size:11px;font-weight:600;letter-spacing:0.5px;}
-  .topbar-actions{display:flex;gap:8px;margin-top:10px;}
-  .search-wrap{position:relative;flex:1;}
-  .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.6);font-size:15px;pointer-events:none;}
-  #searchInput{width:100%;padding:10px 40px 10px 36px;border-radius:8px;border:none;background:rgba(255,255,255,0.15);color:#fff;font-size:14px;font-family:inherit;outline:none;transition:background .2s;}
-  #searchInput::placeholder{color:rgba(255,255,255,0.55);}
-  #searchInput:focus{background:rgba(255,255,255,0.22);}
-  .clear-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,0.7);font-size:16px;cursor:pointer;display:none;}
-  .btn-add{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.35);border-radius:8px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .18s;font-family:inherit;}
-  .btn-add:hover{background:rgba(255,255,255,0.28);}
+/* ── HEADER ── */
+.hdr{background:var(--navy);color:#fff;padding:0 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.hdr-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:14px;height:54px}
+.hdr-brand{font-size:12px;font-weight:800;letter-spacing:.5px;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.hdr-brand .brain{font-size:18px}
+.search-wrap{flex:1;position:relative}
+.search-wrap input{width:100%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:7px 10px 7px 32px;color:#fff;font-size:12px;outline:none;transition:.2s}
+.search-wrap input::placeholder{color:rgba(255,255,255,.45)}
+.search-wrap input:focus{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4)}
+.search-wrap .si{position:absolute;left:9px;top:50%;transform:translateY(-50%);opacity:.5;font-size:14px;pointer-events:none}
+.clear-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:14px;display:none}
+.hdr-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;padding:6px 12px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.15s;text-decoration:none}
+.hdr-btn:hover{background:rgba(255,255,255,.25)}
+.hdr-btn.green{background:rgba(26,122,74,.8);border-color:rgba(26,122,74,.9)}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0}
+.sync-dot.loading{background:#f59e0b;animation:blink 1s infinite}
+.sync-dot.error{background:#f87171}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
-  /* STATS + FILTER */
-  .stats-bar{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;background:var(--card);border-bottom:1px solid var(--border);}
-  .stats-count{font-size:12px;color:var(--muted);font-weight:600;}
-  .stats-count strong{color:var(--navy);}
-  .btn-export{font-size:11px;font-weight:700;color:var(--navy);background:var(--step-bg);border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer;font-family:inherit;}
-  .filter-row{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;scrollbar-width:none;background:var(--card);border-bottom:1px solid var(--border);}
-  .filter-row::-webkit-scrollbar{display:none;}
-  .chip{display:inline-flex;align-items:center;gap:4px;padding:5px 11px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);white-space:nowrap;transition:all .18s;background:var(--bg);color:var(--muted);user-select:none;}
-  .chip.active{background:var(--navy);color:#fff;border-color:var(--navy);}
-  .chip:hover:not(.active){border-color:var(--navy);color:var(--navy);}
+/* ── LAYOUT ── */
+.page{max-width:900px;margin:0 auto;padding:20px 16px 60px}
 
-  /* CARDS */
-  .content{padding:14px 12px 100px;max-width:860px;margin:0 auto;}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .18s;}
-  .card:hover{box-shadow:0 4px 20px rgba(0,48,135,0.14);}
-  .card-header{display:flex;align-items:center;gap:10px;padding:13px 14px 10px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;}
-  .card-header:active{background:var(--bg);}
-  .cat-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:0.4px;flex-shrink:0;}
-  .card-title{font-size:13px;font-weight:700;color:var(--text);flex:1;line-height:1.35;}
-  .card-arrow{color:var(--muted);font-size:13px;transition:transform .2s;flex-shrink:0;}
-  .card.open .card-arrow{transform:rotate(90deg);}
-  .card-keywords{display:none;}
-  .card-body{display:none;padding:0 14px 14px;border-top:1px solid var(--border);font-size:13px;}
-  .card.open .card-body{display:block;}
-  .card-actions{display:flex;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);}
-  .btn-edit{font-size:11px;font-weight:700;color:var(--navy);background:var(--step-bg);border:1px solid var(--border);border-radius:6px;padding:5px 12px;cursor:pointer;font-family:inherit;}
-  .btn-delete{font-size:11px;font-weight:700;color:#b91c1c;background:#fff0f0;border:1px solid #fecaca;border-radius:6px;padding:5px 12px;cursor:pointer;font-family:inherit;}
-  .badge-custom{background:#fef9c3;color:#854d0e;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle;}
+/* ── TABS ── */
+.tabs{display:flex;gap:4px;margin-bottom:18px;flex-wrap:wrap}
+.tab{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:var(--white);color:var(--muted);transition:.15s}
+.tab:hover{border-color:var(--navy);color:var(--navy)}
+.tab.active{background:var(--navy);border-color:var(--navy);color:#fff}
 
-  /* INNER CONTENT */
-  .kh-content{line-height:1.7;color:var(--text);}
-  .kh-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:14px 0 5px;}
-  .kh-desc{background:#f8faff;border:1px solid var(--border);border-radius:8px;padding:11px 13px;color:#334155;font-size:13px;margin-bottom:4px;}
-  .kh-step{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
-  .kh-step-num{width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
-  .kh-step-text{flex:1;}
-  .kh-step-title{font-weight:600;color:var(--text);margin-bottom:3px;font-size:13px;}
-  .sys-tag{display:inline-block;background:var(--step-bg);color:var(--navy);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;font-family:monospace;margin:2px 2px 0 0;}
-  .email-tag{display:inline-block;font-family:'Courier New',monospace;font-size:12px;color:var(--navy);background:var(--step-bg);padding:1px 6px;border-radius:4px;}
-  .kh-warn{background:var(--warn-bg);border-width:1px 1px 1px 4px;border-style:solid;border-color:var(--warn-bd);border-radius:8px;padding:10px 13px;margin:10px 0;display:flex;gap:8px;align-items:flex-start;font-size:12px;color:#7a5900;line-height:1.6;}
-  .kh-info{background:var(--info-bg);border-width:1px 1px 1px 4px;border-style:solid;border-color:#b3e4f6 #b3e4f6 #b3e4f6 var(--info-bd);border-radius:8px;padding:10px 13px;margin:10px 0;display:flex;gap:8px;align-items:flex-start;font-size:12px;color:#005a7a;line-height:1.6;}
-  .kh-example{background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:6px;padding:6px 10px;font-size:12px;color:#92400e;margin-top:4px;line-height:1.6;font-style:italic;}
-  .kh-contacts{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px;}
-  .contact-pill{display:inline-flex;align-items:center;gap:6px;background:#f0f4fb;border:1px solid var(--border);border-radius:20px;padding:4px 11px 4px 7px;font-size:11px;color:var(--navy);font-weight:600;text-decoration:none;}
-  .contact-pill:hover{background:var(--step-bg);}
-  .contact-avatar{width:20px;height:20px;border-radius:50%;background:var(--blue2);color:#fff;font-size:8px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+/* ── SYNC BAR ── */
+.sync-bar{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:var(--shadow)}
+.sync-info{font-size:11px;color:var(--muted)}
+.sync-info strong{color:var(--text)}
+.sync-actions{display:flex;gap:8px}
 
-  /* MODAL */
-  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
-  .modal-overlay.hidden{display:none;}
-  .modal{background:#fff;border-radius:16px;width:100%;max-width:560px;box-shadow:0 20px 60px rgba(0,0,0,0.25);margin:auto;}
-  .modal-header{background:linear-gradient(135deg,var(--navy2),var(--navy));padding:18px 20px;border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:space-between;}
-  .modal-title{color:#fff;font-size:15px;font-weight:800;}
-  .modal-close{background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;line-height:1;padding:0 4px;}
-  .modal-body{padding:20px;}
-  .form-group{margin-bottom:14px;}
-  .form-label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);margin-bottom:5px;}
-  .form-input,.form-select,.form-textarea{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;color:var(--text);background:#fff;outline:none;transition:border-color .18s;}
-  .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--navy);}
-  .form-textarea{resize:vertical;min-height:80px;line-height:1.5;}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-  .steps-container{border:1.5px solid var(--border);border-radius:8px;padding:12px;}
-  .step-row{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start;}
-  .step-num-badge{width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:8px;}
-  .step-input{flex:1;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit;outline:none;}
-  .step-input:focus{border-color:var(--navy);}
-  .btn-remove-step{background:none;border:none;color:#b91c1c;font-size:16px;cursor:pointer;padding:6px;margin-top:4px;}
-  .btn-add-step{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--navy);background:var(--step-bg);border:1px dashed var(--border);border-radius:6px;padding:6px 12px;cursor:pointer;margin-top:4px;font-family:inherit;}
-  .contacts-container{display:flex;flex-direction:column;gap:6px;}
-  .contact-row{display:grid;grid-template-columns:80px 1fr 1fr;gap:6px;align-items:center;}
-  .contact-row input{padding:7px 9px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit;outline:none;}
-  .contact-row input:focus{border-color:var(--navy);}
-  .btn-remove-contact{background:none;border:none;color:#b91c1c;font-size:16px;cursor:pointer;}
-  .btn-add-contact{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--navy);background:var(--step-bg);border:1px dashed var(--border);border-radius:6px;padding:6px 12px;cursor:pointer;margin-top:4px;font-family:inherit;}
-  .modal-footer{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;}
-  .btn-cancel{padding:9px 18px;border:1.5px solid var(--border);border-radius:8px;background:#fff;color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
-  .btn-save{padding:9px 22px;border:none;border-radius:8px;background:var(--navy);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
-  .btn-save:hover{background:var(--navy2);}
+/* ── KART ── */
+.entry-card{background:var(--white);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden;border-left:4px solid var(--navy);transition:box-shadow .2s}
+.entry-card:hover{box-shadow:0 4px 20px rgba(0,48,135,.12)}
+.entry-header{padding:14px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:12px}
+.entry-badges{display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap}
+.b-kat{background:var(--navy-l);color:var(--navy)}
+.b-onay{background:var(--green-l);color:var(--green)}
+.b-taslak{background:var(--amber-l);color:var(--amber)}
+.entry-title-wrap{flex:1}
+.entry-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:3px}
+.entry-title{font-size:14px;font-weight:700;color:var(--navy);line-height:1.3}
+.entry-meta{font-size:10px;color:var(--faint);margin-top:4px}
+.entry-chevron{font-size:12px;color:var(--faint);transition:transform .2s;margin-top:3px;flex-shrink:0}
+.entry-card.open .entry-chevron{transform:rotate(180deg)}
 
-  /* IMPORT/EXPORT */
-  .io-bar{display:flex;gap:8px;padding:8px 16px;background:#f8faff;border-bottom:1px solid var(--border);}
-  .btn-io{font-size:11px;font-weight:700;color:var(--muted);background:var(--card);border:1px solid var(--border);border-radius:6px;padding:5px 11px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:4px;}
-  .btn-io:hover{border-color:var(--navy);color:var(--navy);}
+.entry-body{display:none;border-top:1px solid var(--border);padding:16px}
+.entry-card.open .entry-body{display:block}
 
-  /* EMPTY */
-  .empty{text-align:center;padding:60px 20px;color:var(--muted);}
-  .empty-icon{font-size:40px;margin-bottom:12px;}
-  mark{background:#fef08a;color:var(--text);border-radius:2px;padding:0 1px;}
+.section-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:8px}
+.desc-text{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:16px}
 
-  @media(min-width:600px){.topbar{padding:20px 24px 18px;}.content{padding:18px 20px 100px;}}
+/* Adımlar */
+.steps{margin-bottom:16px}
+.step{display:flex;gap:12px;margin-bottom:8px;align-items:flex-start}
+.step-no{width:24px;height:24px;background:var(--navy);color:#fff;border-radius:50%;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-body{flex:1}
+.step-text{font-size:13px;color:var(--text)}
+.step-owner{font-size:11px;color:var(--muted);font-weight:600;margin-top:1px}
+
+/* Uyarı */
+.warning-box{background:var(--amber-l);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#7a5900;line-height:1.5}
+
+/* Kişiler */
+.contacts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.contact-chip{display:inline-flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 12px}
+.contact-avatar{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-info{font-size:11px}
+.contact-name{font-weight:700;color:var(--text)}
+.contact-mail{color:var(--muted)}
+.contact-mail a{color:var(--navy);text-decoration:none}
+.contact-mail a:hover{text-decoration:underline}
+
+/* Entry footer */
+.entry-footer{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.entry-footer-meta{font-size:10px;color:var(--faint);line-height:1.6}
+.entry-actions{display:flex;gap:6px}
+.btn-sm{padding:5px 11px;font-size:11px;font-weight:700;border-radius:7px;cursor:pointer;border:1px solid;transition:.15s}
+.btn-edit{background:var(--navy-l);border-color:var(--navy);color:var(--navy)}
+.btn-edit:hover{background:var(--navy);color:#fff}
+.btn-del{background:var(--red-l);border-color:var(--red);color:var(--red)}
+.btn-del:hover{background:var(--red);color:#fff}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);border-radius:14px;padding:0;max-width:600px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2);margin:auto}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--border)}
+.modal-title{font-size:15px;font-weight:800;color:var(--navy)}
+.modal-close{background:var(--bg);border:none;border-radius:7px;padding:5px 10px;cursor:pointer;font-size:16px;color:var(--muted)}
+.modal-body{padding:20px}
+
+/* Form */
+.f-row{margin-bottom:14px}
+.f-row label{display:block;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.f-row label .req{color:var(--red);margin-left:2px}
+.f-row input,.f-row select,.f-row textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);outline:none;font-family:inherit;transition:border-color .15s;background:var(--white)}
+.f-row input:focus,.f-row select:focus,.f-row textarea:focus{border-color:var(--navy)}
+.f-row input.err,.f-row select.err,.f-row textarea.err{border-color:var(--red);background:var(--red-l)}
+.f-row textarea{resize:vertical;min-height:80px}
+.f-hint{font-size:10px;color:var(--faint);margin-top:4px}
+
+/* Ekleyen özel alan */
+.ekleyen-wrap{background:var(--navy-l);border:1px solid var(--navy);border-radius:8px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.ekleyen-wrap .icon{font-size:20px;flex-shrink:0}
+.ekleyen-wrap input{flex:1;border:none;background:transparent;font-size:13px;font-weight:700;color:var(--navy);outline:none}
+.ekleyen-wrap input::placeholder{color:rgba(0,48,135,.4);font-weight:400}
+
+/* Adım builder */
+.steps-builder{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:6px}
+.step-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--border)}
+.step-row:last-child{border-bottom:none}
+.step-num{width:22px;height:22px;background:var(--navy);color:#fff;border-radius:50%;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-inp{flex:1;border:none;background:transparent;font-size:12px;color:var(--text);outline:none}
+.step-own{width:110px;border:none;background:transparent;font-size:11px;color:var(--muted);outline:none;text-align:right}
+.step-del{background:none;border:none;color:var(--faint);cursor:pointer;font-size:14px;padding:0 4px}
+.step-del:hover{color:var(--red)}
+.add-step-btn{display:flex;align-items:center;gap:5px;padding:7px 12px;background:var(--bg);border:1px dashed var(--border);border-radius:8px;font-size:12px;color:var(--muted);cursor:pointer;width:100%;transition:.15s}
+.add-step-btn:hover{border-color:var(--navy);color:var(--navy)}
+
+/* Kişi builder */
+.kisiler-builder{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:6px}
+.kisi-row{display:flex;align-items:center;gap:6px;padding:7px 10px;border-bottom:1px solid var(--border)}
+.kisi-row:last-child{border-bottom:none}
+.kisi-inp{flex:1;border:none;background:transparent;font-size:12px;color:var(--text);outline:none;min-width:60px}
+.kisi-inp::placeholder{color:var(--faint)}
+.kisi-del{background:none;border:none;color:var(--faint);cursor:pointer;font-size:14px;padding:0 4px}
+.kisi-del:hover{color:var(--red)}
+
+/* Modal footer */
+.modal-footer{display:flex;gap:8px;justify-content:space-between;align-items:center;padding:14px 20px;border-top:1px solid var(--border)}
+.modal-footer-left{font-size:11px;color:var(--faint)}
+.modal-footer-right{display:flex;gap:8px}
+.btn-cancel{padding:8px 16px;font-size:12px;font-weight:700;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--muted);cursor:pointer}
+.btn-save{padding:8px 18px;font-size:12px;font-weight:700;border-radius:8px;border:none;background:var(--navy);color:#fff;cursor:pointer;transition:.15s}
+.btn-save:hover{background:#002070}
+.btn-save:disabled{opacity:.5;cursor:not-allowed}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:999;transform:translateY(20px);opacity:0;transition:.3s;display:flex;align-items:center;gap:8px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{background:var(--green)}
+.toast.error{background:var(--red)}
+
+/* ── BOŞ DURUM ── */
+.empty{text-align:center;padding:48px 20px;color:var(--faint)}
+.empty .icon{font-size:40px;margin-bottom:12px}
+
+/* ── LOADING ── */
+.loading-wrap{text-align:center;padding:48px;color:var(--muted)}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+footer{text-align:center;padding:20px;font-size:10px;color:var(--faint);letter-spacing:.5px;border-top:1px solid var(--border);margin-top:20px}
+
+@media(max-width:600px){
+  .hdr-inner{flex-wrap:wrap;height:auto;padding:10px 0;gap:8px}
+  .hdr-brand{flex:1}
+  .search-wrap{order:3;width:100%}
+}
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="topbar-head">
-    <div class="topbar-icon">🧠</div>
-    <div>
-      <div class="topbar-title">Kurumsal Hafıza</div>
-      <div class="topbar-sub">VIP &amp; Sosyal Medya Takım · Dahili Kullanım</div>
+<!-- ── HEADER ── -->
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-brand">
+      <span class="brain">🧠</span>
+      <span>Kurumsal Hafıza</span>
     </div>
-  </div>
-  <div class="topbar-actions">
     <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input type="text" id="searchInput" placeholder="Case, birim veya kişi ara…" autocomplete="off"/>
-      <button class="clear-btn" id="clearBtn" onclick="clearSearch()">✕</button>
+      <span class="si">🔍</span>
+      <input type="text" id="srch" placeholder="Anahtar kelime, kişi, süreç ara…" autocomplete="off">
+      <button class="clear-btn" id="clear-btn" onclick="clearSearch()">✕</button>
     </div>
-    <button class="btn-add" onclick="openModal()">＋ Yeni Ekle</button>
+    <div class="sync-dot" id="sync-dot" title="Bağlantı durumu"></div>
+    <button class="hdr-btn green" onclick="openModal()">＋ Yeni Ekle</button>
   </div>
-</div>
+</header>
 
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <span class="stats-count" id="statsCount"><strong>11</strong> kayıt yüklendi</span>
-  <span></span>
-</div>
+<!-- ── PAGE ── -->
+<div class="page">
 
-<!-- FILTER CHIPS -->
-<div class="filter-row">
-  <div class="chip active" data-cat="all"      onclick="filterCat(this,'all')">📋 Tümü</div>
-  <div class="chip" data-cat="internet"         onclick="filterCat(this,'internet')">🌐 İnternet</div>
-  <div class="chip" data-cat="pstn"             onclick="filterCat(this,'pstn')">📞 PSTN</div>
-  <div class="chip" data-cat="mobil"            onclick="filterCat(this,'mobil')">📱 Mobil</div>
-  <div class="chip" data-cat="iletisim"         onclick="filterCat(this,'iletisim')">💼 İletişim</div>
-  <div class="chip" data-cat="tv"               onclick="filterCat(this,'tv')">📺 TV</div>
-</div>
-
-<!-- IMPORT / EXPORT BAR -->
-<div class="io-bar">
-  <button class="btn-io" onclick="exportJSON()">⬇️ JSON Yedek Al</button>
-  <button class="btn-io" onclick="document.getElementById('importFile').click()">⬆️ JSON Yükle</button>
-  <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(event)"/>
-</div>
-
-<!-- CARDS CONTAINER -->
-<div class="content" id="cardsContainer">
-
-  <!-- BUILT-IN CARDS (id: b1..b11) -->
-
-  <div class="card" data-cat="internet" data-id="b1">
-    <div class="card-keywords">gbps simetrik hat upload hız yükseltme rsmc sem bng port 1000 mbps</div>
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="cat-badge" style="background:#e8f7f1;color:#1a7a4a;">🌐 İNTERNET</span>
-      <span class="card-title">⬆️ 1 Gbps Simetrik Hat — Upload Hız Yükseltme Talebi</span>
-      <span class="card-arrow">›</span>
+  <!-- Sync bar -->
+  <div class="sync-bar">
+    <div class="sync-info">
+      <strong id="entry-count">…</strong> kayıt yüklendi
+      · Son güncelleme: <span id="last-sync">—</span>
     </div>
-    <div class="card-body kh-content">
-      <p class="kh-label">TALEP AÇIKLAMASI</p>
-      <div class="kh-desc">Çift yönlü 1.000 Mbps (Download &amp; Upload) değerindeki 1 Giga hatlarda, upload değerinin de manuel olarak 1.000 Mbps'e yükseltilmesi talepleridir.</div>
-      <p class="kh-label">İŞLEM ADIMLARI</p>
-      <div class="kh-step"><div class="kh-step-num">1</div><div class="kh-step-text"><div class="kh-step-title">Port hızı 1.000 Mbps olarak güncellenir.</div><span class="sys-tag">RSMC İSTANBUL DSL</span></div></div>
-      <div class="kh-step"><div class="kh-step-num">2</div><div class="kh-step-text"><div class="kh-step-title">BNG tarafı güncellenir.</div><span class="sys-tag">SEM ANKARA</span></div></div>
-      <div class="kh-warn"><span>⚠️</span><span>İşlem <strong>tamamen manuel</strong> yapılmaktadır. Arıza kaydı açılması veya hat resetlenmesi durumunda tanımlama <strong>iptal olur</strong> ve tüm adımların yeniden yapılması gerekir.</span></div>
-      <p class="kh-label">İLGİLİ EKİPLER</p>
-      <div class="kh-contacts">
-        <a class="contact-pill" href="mailto:rsmc.istanbul.dsl@turktelekom.com.tr"><span class="contact-avatar">RS</span>RSMC İST DSL</a>
-        <a class="contact-pill" href="mailto:sem-ankara@turktelekom.com.tr"><span class="contact-avatar">SA</span>SEM ANKARA</a>
-      </div>
+    <div class="sync-actions">
+      <button class="hdr-btn" onclick="loadEntries()" title="Yenile">🔄 Yenile</button>
+      <button class="hdr-btn" onclick="exportJSON()" title="JSON yedek al">⬇ JSON</button>
     </div>
   </div>
 
-  <div class="card" data-cat="pstn" data-id="b2">
-    <div class="card-keywords">acep cezaevi pstn sabit ses rutil adıgüzel çağrı büyükbaş arıza çalışmıyor telefon</div>
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="cat-badge" style="background:#fef3e8;color:#b45309;">📞 PSTN</span>
-      <span class="card-title">🔒 ACEP Cezaevi Telefon Sistemi — Arıza / Çalışmıyor Şikayeti</span>
-      <span class="card-arrow">›</span>
-    </div>
-    <div class="card-body kh-content">
-      <p class="kh-label">TALEP AÇIKLAMASI</p>
-      <div class="kh-desc">Açık Ceza Evi Projesi (ACEP) kapsamında cezaevlerine kurulu PSTN telefon sistemlerinin çalışmaması / arızalı olması durumunda yönlendirilecek süreçtir. GMY takibinde olduğundan <strong>öncelikli müdahale</strong> gerektirir.</div>
-      <p class="kh-label">İŞLEM ADIMLARI</p>
-      <div class="kh-step"><div class="kh-step-num">1</div><div class="kh-step-text"><div class="kh-step-title">Şikayeti alır almaz Sabit Ses &amp; Saha Çözümleri ekiplerine iletilir.</div><span class="sys-tag">RUTİL ADIGÜZEL</span><span class="sys-tag">ÇAĞRI BÜYÜKBAŞ</span></div></div>
-      <div class="kh-step"><div class="kh-step-num">2</div><div class="kh-step-text"><div class="kh-step-title">WhatsApp mesajında cezaevi adı, şehir, arıza süresi ve GMY takibinde olduğu notu yer alır.</div><div class="kh-example">💬 "Marmara 2 No'lu L Tipi Kapalı Cezaevi Silivri'de ACEP uygulaması 2 gündür çalışmıyor. GMY'miz Zeynep Hanım takibindedir, öncelikli desteğinizle."</div></div></div>
-      <div class="kh-step"><div class="kh-step-num">3</div><div class="kh-step-text"><div class="kh-step-title">Saha ekibi kurumla iletişime geçerek kontrol sağlar ve sonucu iletir.</div></div></div>
-      <div class="kh-step"><div class="kh-step-num">4</div><div class="kh-step-text"><div class="kh-step-title">Genel kontrol "problem yok" dönerse kişiye özel sorun araştırılır, hat numarası talep edilir.</div><div class="kh-info"><span>💡</span><span>Kesinti yaşanıp yaşanmadığı da ayrıca sorulur.</span></div></div></div>
-      <div class="kh-step"><div class="kh-step-num">5</div><div class="kh-step-text"><div class="kh-step-title">Sonuç Müge Hanım ve GMY'ye (Zeynep Hanım) raporlanır.</div></div></div>
-      <div class="kh-warn"><span>⚠️</span><span>ACEP sistemi <strong>cezaevi güvenlik altyapısına</strong> entegre PSTN hizmetidir. Tüm iletişim kayıt altına alınmalıdır.</span></div>
-      <p class="kh-label">İLGİLİ EKİPLER</p>
-      <div class="kh-contacts">
-        <a class="contact-pill" href="mailto:RUTIL.ADIGUZEL@turktelekom.com.tr"><span class="contact-avatar">RA</span>Rutil Adıgüzel</a>
-        <a class="contact-pill" href="mailto:CAGRI.BUYUKBAS@turktelekom.com.tr"><span class="contact-avatar">ÇB</span>Çağrı Büyükbaş</a>
-      </div>
-    </div>
+  <!-- Tabs -->
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-cat="">📋 Tümü</button>
+    <button class="tab" data-cat="🌐 İnternet">🌐 İnternet</button>
+    <button class="tab" data-cat="📞 PSTN">📞 PSTN</button>
+    <button class="tab" data-cat="📱 Mobil">📱 Mobil</button>
+    <button class="tab" data-cat="💼 İletişim">💼 İletişim</button>
+    <button class="tab" data-cat="📺 TV">📺 TV</button>
   </div>
 
-  <div class="card" data-cat="mobil" data-id="b3">
-    <div class="card-keywords">yurtdışı kısıtlama fus fatura üst sınırı tarifen yurtdışında roaming devam sms paket 250 tl</div>
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="cat-badge" style="background:#e8f0fd;color:#0062d6;">📱 MOBİL</span>
-      <span class="card-title">✈️ Yurtdışında Kısıtlanan Hatlar — FÜS &amp; Tarifen Yurtdışında Servisi</span>
-      <span class="card-arrow">›</span>
+  <!-- Entries -->
+  <div id="entries-wrap">
+    <div class="loading-wrap">
+      <div class="spinner"></div>
+      <div>Google Sheets'ten yükleniyor…</div>
     </div>
-    <div class="card-body kh-content">
-      <p class="kh-label">SIK KARŞILAŞILAN DURUM</p>
-      <div class="kh-desc">Yurtdışında aktif olan müşteri, kullanım yaparken aniden erişim kesintisi yaşamaktadır. Hattında herhangi bir yurtdışı paketi bulunmamaktadır.</div>
-      <p class="kh-label">KÖK NEDEN</p>
-      <div class="kh-info"><span>💡</span><span>Paketsiz yurtdışı internet kullanım ücreti <strong>250 TL</strong>'ye ulaştığında sistem erişimi otomatik kesmektedir (FÜS). "Devam" SMS'i gönderilirse limit <strong>5.000 → 10.000 → 20.000 TL</strong> kademesiyle artar.</span></div>
-      <p class="kh-label">ÇÖZÜM</p>
-      <div class="kh-step"><div class="kh-step-num">1</div><div class="kh-step-text"><div class="kh-step-title">Müşteriye <strong>Tarifen Yurtdışında</strong> servisi tanımlanır. (Günlük: 349–549 TL)</div></div></div>
-      <div class="kh-step"><div class="kh-step-num">2</div><div class="kh-step-text"><div class="kh-step-title">Servis aktif edildiğinde müşteri kapatmadığı sürece <strong>açık kalmaya devam eder</strong>.</div></div></div>
-      <div class="kh-step"><div class="kh-step-num">3</div><div class="kh-step-text"><div class="kh-step-title">"Tarifen Yurtdışında" servisinin ne zaman &amp; hangi kanaldan iptal edildiği sorgulanmalıdır.</div></div></div>
-      <div class="kh-warn"><span>⚠️</span><span>Müşteri "Devam" yanıtı vererek kullanmışsa yüksek fatura kesinleşmiş olabilir. Kontrol edilmeden taahhüt verilmemelidir.</span></div>
-      <p class="kh-label">İLGİLİ EKİP</p>
-      <div class="kh-contacts"><a class="contact-pill" href="mailto:vip_mobil@assistt.com.tr"><span class="contact-avatar">VM</span>vip_mobil@assistt.com.tr</a></div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="iletisim" data-id="b4">
-    <div class="card-keywords">kvkk kişisel veri gizlilik görüş talep sınır ötesi transfer göksun batmaz core hukuk</div>
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="cat-badge" style="background:#eef1f5;color:#475569;">💼 İLETİŞİM</span>
-      <span class="card-title">🛡️ KVKK Core Ekibi — Görüş &amp; Bilgi Talepleri</span>
-      <span class="card-arrow">›</span>
-    </div>
-    <div class="card-body kh-content">
-      <p class="kh-label">BİRİM AÇIKLAMASI</p>
-      <div class="kh-desc">KVKK ile alakalı taleplerde <strong>bilgi almak, görüş almak veya soru sormak</strong> amacıyla ulaşılması gereken birim KVKK Core ekibidir.</div>
-      <p class="kh-label">İLGİLİ KİŞİ &amp; TOPLU ADRES</p>
-      <div class="kh-step"><div class="kh-step-num">1</div><div class="kh-step-text"><div class="kh-step-title"><strong>KVKK Core</strong> — Toplu ekip mail</div><span class="email-tag">kvkkcore@turktelekom.com.tr</span></div></div>
-      <div class="kh-step"><div class="kh-step-num">2</div><div class="kh-step-text"><div class="kh-step-title"><strong>Göksun Işıl Batmaz</strong> — Müdür</div><span class="email-tag">goksunisil.batmaz@turktelekom.com.tr</span></div></div>
-      <div class="kh-warn"><span>⚠️</span><span>KVKK görüşü gerektiren süreçlerde <strong>resmi mail trafiğiyle</strong> başvurmak gerekir. Şifahi yönlendirme yetersiz kalır.</span></div>
-      <p class="kh-label">İLGİLİ EKİPLER</p>
-      <div class="kh-contacts">
-        <a class="contact-pill" href="mailto:kvkkcore@turktelekom.com.tr"><span class="contact-avatar">KC</span>kvkkcore</a>
-        <a class="contact-pill" href="mailto:goksunisil.batmaz@turktelekom.com.tr"><span class="contact-avatar">GB</span>Göksun Işıl Batmaz</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="iletisim" data-id="b5">
-    <div class="card-keywords">adba monitoring ajans alert rapor brandwatch sosyal medya ercan akkuş izleme</div>
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="cat-badge" style="background:#eef1f5;color:#475569;">💼 İLETİŞİM</span>
-      <span class="card-title">📊 Adba — Monitoring Ajansı (Alert, Rapor &amp; Monitoring)</span>
-      <span class="card-arrow">›</span>
-    </div>
-    <div class="card-body kh-content">
-      <p class="kh-label">BİRİM AÇIKLAMASI</p>
-      <div class="kh-desc"><strong>Adba Analytics</strong>, Türk Telekom sosyal medya monitoring &amp; raporlama dış ajans iş ortağıdır. Alert düzenlemeleri, rapor talepleri ve monitoring raporları için Adba ile iletişime geçilir.</div>
-      <p class="kh-label">İLGİLİ KİŞİ &amp; EKİP ADRESİ</p>
-      <div class="kh-step"><div class="kh-step-num">1</div><div class="kh-step-text"><div class="kh-step-title"><strong>Türk Telekom Project Team</strong> — Adba ekip toplu adresi</div><span class="email-tag">team.turktelekom@adbaanalytics.com</span></div></div>
-      <div class="kh-step"><div class="kh-step-num">2</div><div class="kh-step-text"><div class="kh-step-title"><strong>Ercan Akkuş</strong> — Adba Analytics</div><span class="email-tag">ercan.akkus@adbaanalytics.com</span></div></div>
-      <div class="kh-warn"><span>⚠️</span><span>Adba dış ajans — adresler <strong>@adbaanalytics.com</strong> uzantılıdır. KVKK kapsamında veri paylaşımı içeren taleplerde paylaşılabilirlik önceden teyit edilmelidir.</span></div>
-      <p class="kh-label">İLGİLİ EKİPLER</p>
-      <div class="kh-contacts">
-        <a class="contact-pill" href="mailto:team.turktelekom@adbaanalytics.com"><span class="contact-avatar">TT</span>team.turktelekom</a>
-        <a class="contact-pill" href="mailto:ercan.akkus@adbaanalytics.com"><span class="contact-avatar">EA</span>Ercan Akkuş</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="iletisim" data-id="b6">
-    <div class="card-keywords">uçak wifi kod talep vip havayolu uçuş gizem tokatlı sabit internet ürün yönetimi</div>
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="cat-badge" style="background:#eef1f5;color:#475569;">💼 İLETİŞİM</span>
-      <span class="card-title">✈️ Uçak Wifi Kod Talepleri — Sabit İnternet &amp; Wifi Ürün Yönetimi</span>
-      <span class="card-arrow">›</span>
-    </div>
-    <div class="card-body kh-content">
-      <p class="kh-label">BİRİM AÇIKLAMASI</p>
-      <div class="kh-desc">Uçak Wifi kod talepleri, <strong>Sabit İnternet &amp; Wifi Ürün Yönetimi Müdürlüğü</strong> sorumluluğundadır. Ana kontak Gizem Tokatlı'dır.</div>
-      <p class="kh-label">İLGİLİ KİŞİ &amp; EKİP ADRESİ</p>
-      <div class="kh-step"><div class="kh-step-num">1</div><div class="kh-step-text"><div class="kh-step-title"><strong>Gizem Tokatlı</strong> — Müdür</div><span class="email-tag">gizem.tokatli@turktelekom.com.tr</span></div></div>
-      <div class="kh-step"><div class="kh-step-num">2</div><div class="kh-step-text"><div class="kh-step-title">Ekip toplu mail adresi</div><span class="email-tag">sabit_internet&amp;wifi_urun_yonetimi_mudurlugu@turktelekom.com.tr</span></div></div>
-      <div class="kh-info"><span>💡</span><span>Taleplerde <strong>müşteri bilgisi</strong>, <strong>uçuş tarihi</strong> ve <strong>talep gerekçesi</strong> mailde net olarak iletilmelidir. Gizem Hanım'a doğrudan mail atılabilir, ekip adresi CC'lenmelidir.</span></div>
-      <p class="kh-label">İLGİLİ EKİPLER</p>
-      <div class="kh-contacts">
-        <a class="contact-pill" href="mailto:gizem.tokatli@turktelekom.com.tr"><span class="contact-avatar">GT</span>Gizem Tokatlı</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="iletisim" data-id="b7">
-    <div class="card-keywords">marcom marka iletişim instagram sosyal medya hesap bengü çam simge çakıcı vas sm brief</div>
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="cat-badge" style="background:#eef1f5;color:#475569;">💼 İLETİŞİM</span>
-      <span class="card-title">📣 Marcom Ekipleri — Marka İletişim &amp; Sosyal Medya Hesap Yönetimi</span>
-      <span class="card-arrow">›</span>
-    </div>
-    <div class="card-body kh-content">
-      <p class="kh-label">BİRİM AÇIKLAMASI</p>
-      <div class="kh-desc">Marcom toplu mail içeriğinde <strong>VAS&amp;SM</strong>, <strong>Mobil</strong>, <strong>Sabit&amp;TV</strong>, <strong>İmaj&amp;PR</strong> alt bölümleri bulunur. <strong>Instagram</strong> hesap konularında <strong>Marka İletişim VAS&amp;SM</strong> sorumludur.</div>
-      <p class="kh-label">İLGİLİ KİŞİLER</p>
-      <div class="kh-step"><div class="kh-step-num">1</div><div class="kh-step-text"><div class="kh-step-title"><strong>Bengü Çam</strong> — Marka İletişim VAS&amp;SM</div><span class="email-tag">bengu.cam@turktelekom.com.tr</span></div></div>
-      <div class="kh-step"><div class="kh-step-num">2</div><div class="kh-step-text"><div class="kh-step-title"><strong>Simge Çakıcı</strong> — Müdür</div><span class="email-tag">simge.cakici@turktelekom.com.tr</span></div></div>
-      <div class="kh-warn"><span>⚠️</span><span>Toplu adres <strong>dl_marcom_brief@turktelekom.com.tr</strong> tüm marcom bölümlerine ulaşır. Spesifik konular için alt birim kişisini CC'lemek daha hızlı dönüş sağlar.</span></div>
-      <p class="kh-label">İLGİLİ EKİPLER</p>
-      <div class="kh-contacts">
-        <a class="contact-pill" href="mailto:dl_marcom_brief@turktelekom.com.tr"><span class="contact-avatar">DL</span>dl_marcom_brief</a>
-        <a class="contact-pill" href="mailto:bengu.cam@turktelekom.com.tr"><span class="contact-avatar">BÇ</span>Bengü Çam</a>
-        <a class="contact-pill" href="mailto:simge.cakici@turktelekom.com.tr"><span class="contact-avatar">SÇ</span>Simge Çakıcı</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="iletisim" data-id="b8">
-    <div class="card-keywords">linkedin iç iletişim hesap yönetimi eser değirmencioğlu içerik ekleme kurumsal</div>
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="cat-badge" style="background:#eef1f5;color:#475569;">💼 İLETİŞİM</span>
-      <span class="card-title">💼 LinkedIn Hesap Yönetimi — İç İletişim Kontağı</span>
-      <span class="card-arrow">›</span>
-    </div>
-    <div class="card-body kh-content">
-      <p class="kh-label">BİRİM AÇIKLAMASI</p>
-      <div class="kh-desc">Kurumsal LinkedIn hesabının yönetimi, eklemeler ve yenilikler noktasında <strong>İç İletişim</strong> birimi ile iletişim halinde olunmaktadır.</div>
-      <p class="kh-label">İLGİLİ KİŞİ</p>
-      <div class="kh-step"><div class="kh-step-num">1</div><div class="kh-step-text"><div class="kh-step-title"><strong>Eser Değirmencioğlu</strong> — LinkedIn hesap yönetimi sorumlusu</div><span class="email-tag">eser.degirmencioglu@turktelekom.com.tr</span></div></div>
-      <div class="kh-step"><div class="kh-step-num">2</div><div class="kh-step-text"><div class="kh-step-title"><strong>İç İletişim</strong> — Toplu mail</div><span class="email-tag">iciletisimmd@turktelekom.com.tr</span></div></div>
-      <p class="kh-label">İLGİLİ EKİPLER</p>
-      <div class="kh-contacts">
-        <a class="contact-pill" href="mailto:eser.degirmencioglu@turktelekom.com.tr"><span class="contact-avatar">ED</span>Eser Değirmencioğlu</a>
-        <a class="contact-pill" href="mailto:iciletisimmd@turktelekom.com.tr"><span class="contact-avatar">İİ</span>İç İletişim</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="iletisim" data-id="b9">
-    <div class="card-keywords">bağış sms katma değerli servis sinan çakıroğlu mobil yardım kampanya dloperator</div>
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="cat-badge" style="background:#eef1f5;color:#475569;">💼 İLETİŞİM</span>
-      <span class="card-title">🎁 Bağış Servisi — Mobil Katma Değerli Servisler Ekibi</span>
-      <span class="card-arrow">›</span>
-    </div>
-    <div class="card-body kh-content">
-      <p class="kh-label">BİRİM AÇIKLAMASI</p>
-      <div class="kh-desc">Bağış servisi (SMS ile bağış vb.) ile ilgili tüm taleplerde <strong>Mobil Katma Değerli Servisler</strong> ekibi sorumludur.</div>
-      <p class="kh-label">İLGİLİ KİŞİ &amp; EKİP ADRESLERİ</p>
-      <div class="kh-step"><div class="kh-step-num">1</div><div class="kh-step-text"><div class="kh-step-title"><strong>Sinan Çakıroğlu</strong> — Mobil KDS</div><span class="email-tag">sinan.cakiroglu@turktelekom.com.tr</span></div></div>
-      <div class="kh-step"><div class="kh-step-num">2</div><div class="kh-step-text"><div class="kh-step-title">Ekip toplu mail</div><span class="email-tag">dloperator_services@turktelekom.com.tr</span></div></div>
-      <div class="kh-step"><div class="kh-step-num">3</div><div class="kh-step-text"><div class="kh-step-title">Bağış özel destek adresi</div><span class="email-tag">bagis@turktelekom.com.tr</span></div></div>
-      <div class="kh-info"><span>💡</span><span>Sinan + <strong>bagis@turktelekom.com.tr</strong> adreslerini birlikte CC'lemek dönüşü hızlandırır.</span></div>
-      <p class="kh-label">İLGİLİ EKİPLER</p>
-      <div class="kh-contacts">
-        <a class="contact-pill" href="mailto:sinan.cakiroglu@turktelekom.com.tr"><span class="contact-avatar">SÇ</span>Sinan Çakıroğlu</a>
-        <a class="contact-pill" href="mailto:dloperator_services@turktelekom.com.tr"><span class="contact-avatar">OS</span>dloperator_services</a>
-        <a class="contact-pill" href="mailto:bagis@turktelekom.com.tr"><span class="contact-avatar">BG</span>bagis</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="tv" data-id="b10">
-    <div class="card-keywords">tivibu provizyon kod msd operasyon ahmet hacıahmetoğlu adem sarı televizyon aktivasyon</div>
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="cat-badge" style="background:#f3e8ff;color:#7c3aed;">📺 TV</span>
-      <span class="card-title">📺 Tivibu Provizyon Kodu — MSD Operasyon Ekibi</span>
-      <span class="card-arrow">›</span>
-    </div>
-    <div class="card-body kh-content">
-      <p class="kh-label">BİRİM AÇIKLAMASI</p>
-      <div class="kh-desc">Tivibu provizyon kodu taleplerinde <strong>MSD Operasyon</strong> ekibi sorumludur.</div>
-      <p class="kh-label">İLGİLİ KİŞİLER &amp; EKİP ADRESİ</p>
-      <div class="kh-step"><div class="kh-step-num">1</div><div class="kh-step-text"><div class="kh-step-title"><strong>Ahmet Hacıahmetoğlu</strong> — MSD Operasyon</div><span class="email-tag">ahmet.haciahmetoglu@turktelekom.com.tr</span></div></div>
-      <div class="kh-step"><div class="kh-step-num">2</div><div class="kh-step-text"><div class="kh-step-title"><strong>Adem Sarı</strong> — MSD Operasyon</div><span class="email-tag">adem.sari@turktelekom.com.tr</span></div></div>
-      <div class="kh-step"><div class="kh-step-num">3</div><div class="kh-step-text"><div class="kh-step-title">MSD Operasyon ekip toplu mail</div><span class="email-tag">msd.operasyon@turktelekom.com.tr</span></div></div>
-      <div class="kh-info"><span>💡</span><span>İki kişiyi doğrudan veya <strong>msd.operasyon@turktelekom.com.tr</strong> adresini CC'leyerek mail atmak en hızlı yöntemdir.</span></div>
-      <p class="kh-label">İLGİLİ EKİPLER</p>
-      <div class="kh-contacts">
-        <a class="contact-pill" href="mailto:ahmet.haciahmetoglu@turktelekom.com.tr"><span class="contact-avatar">AH</span>Ahmet Hacıahmetoğlu</a>
-        <a class="contact-pill" href="mailto:adem.sari@turktelekom.com.tr"><span class="contact-avatar">AS</span>Adem Sarı</a>
-        <a class="contact-pill" href="mailto:msd.operasyon@turktelekom.com.tr"><span class="contact-avatar">MO</span>msd.operasyon</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" data-cat="iletisim" data-id="b11">
-    <div class="card-keywords">hukuk pazarlama müşteri hizmetleri hukuki görüş resmi mail müdürlük değerlendirme</div>
-    <div class="card-header" onclick="toggleCard(this)">
-      <span class="cat-badge" style="background:#eef1f5;color:#475569;">💼 İLETİŞİM</span>
-      <span class="card-title">⚖️ Hukuk İşleri — Pazarlama &amp; MH Hukuk Müdürlüğü</span>
-      <span class="card-arrow">›</span>
-    </div>
-    <div class="card-body kh-content">
-      <p class="kh-label">BİRİM AÇIKLAMASI</p>
-      <div class="kh-desc">Pazarlama ve müşteri hizmetleri tarafındaki hukuki süreçler ve görüş talepleri için <strong>Pazarlama ve MH Hukuk Müdürlüğü</strong>'ne başvurulur.</div>
-      <p class="kh-label">EKİP ADRESİ</p>
-      <div class="kh-step"><div class="kh-step-num">1</div><div class="kh-step-text"><div class="kh-step-title"><strong>Pazarlama ve MH Hukuk Müdürlüğü</strong> — Toplu ekip mail</div><span class="email-tag">pazarlama_mh_hukuk@turktelekom.com.tr</span></div></div>
-      <div class="kh-warn"><span>⚠️</span><span>Hukuki görüş talepleri <strong>resmi mail trafiği</strong> üzerinden yürütülmelidir. Konunun arka planı, taraflar ve belgeler mail içeriğinde net biçimde aktarılmalıdır.</span></div>
-      <p class="kh-label">İLGİLİ EKİPLER</p>
-      <div class="kh-contacts">
-        <a class="contact-pill" href="mailto:pazarlama_mh_hukuk@turktelekom.com.tr"><span class="contact-avatar">PH</span>pazarlama_mh_hukuk</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- DYNAMIC CARDS (localStorage) rendered by JS -->
-  <div id="dynamicCards"></div>
-
-  <div class="empty" id="emptyState" style="display:none;">
-    <div class="empty-icon">🔍</div>
-    <div style="font-size:15px;font-weight:700;color:#1e2d45;margin-bottom:6px;">Sonuç bulunamadı</div>
-    <div style="font-size:13px;">Farklı bir anahtar kelime veya kategori deneyin.</div>
   </div>
 
 </div>
 
-<!-- ═══════════════════════ MODAL ═══════════════════════ -->
-<div class="modal-overlay hidden" id="modalOverlay">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title" id="modalTitle">➕ Yeni Case Ekle</span>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+<footer>◆ TÜRK TELEKOM · VIP & Sosyal Medya Şikayet Yönetimi Ekibi · Kurumsal Hafıza v2.0</footer>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"></div>
+
+<!-- ── MODAL ── -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+<div class="modal">
+  <div class="modal-hdr">
+    <div class="modal-title" id="modal-title">➕ Yeni Kayıt Ekle</div>
+    <button class="modal-close" onclick="closeModal()">✕</button>
+  </div>
+  <div class="modal-body">
+
+    <!-- Ekleyen — özel alan, hep göründe -->
+    <div class="ekleyen-wrap">
+      <span class="icon">👤</span>
+      <input type="text" id="f-ekleyen" placeholder="Adın Soyadın (zorunlu)" autocomplete="off">
     </div>
-    <div class="modal-body">
 
-      <input type="hidden" id="editId"/>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Kategori</label>
-          <select class="form-select" id="fCat">
-            <option value="internet">🌐 İnternet</option>
-            <option value="pstn">📞 PSTN</option>
-            <option value="mobil">📱 Mobil</option>
-            <option value="iletisim">💼 İletişim</option>
-            <option value="tv">📺 TV</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Etiket Metni</label>
-          <input class="form-input" id="fBadge" placeholder="örn: 🌐 İNTERNET"/>
-        </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="f-row">
+        <label>Kategori <span class="req">*</span></label>
+        <select id="f-kat">
+          <option value="">Seç…</option>
+          <option value="🌐 İnternet">🌐 İnternet</option>
+          <option value="📞 PSTN">📞 PSTN</option>
+          <option value="📱 Mobil">📱 Mobil</option>
+          <option value="💼 İletişim">💼 İletişim</option>
+          <option value="📺 TV">📺 TV</option>
+        </select>
       </div>
-
-      <div class="form-group">
-        <label class="form-label">Başlık</label>
-        <input class="form-input" id="fTitle" placeholder="Case başlığı"/>
+      <div class="f-row">
+        <label>Durum</label>
+        <select id="f-durum">
+          <option value="onaylı">✅ Onaylı</option>
+          <option value="taslak">📝 Taslak</option>
+        </select>
       </div>
-
-      <div class="form-group">
-        <label class="form-label">Arama Anahtar Kelimeleri</label>
-        <input class="form-input" id="fKeywords" placeholder="arıza hat sms tl (boşlukla ayır)"/>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Açıklama / Talep</label>
-        <textarea class="form-textarea" id="fDesc" placeholder="Case açıklaması veya talep tanımı…"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">İşlem Adımları</label>
-        <div class="steps-container">
-          <div id="stepsContainer"></div>
-          <button class="btn-add-step" onclick="addStep()">＋ Adım Ekle</button>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Uyarı Notu <span style="font-weight:400;text-transform:none;font-size:10px;">(opsiyonel)</span></label>
-        <textarea class="form-textarea" id="fWarn" placeholder="⚠️ Dikkat edilmesi gereken önemli not…" style="min-height:56px;"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">İlgili Kişiler / E-posta</label>
-        <div class="contacts-container" id="contactsContainer"></div>
-        <button class="btn-add-contact" onclick="addContact()">＋ Kişi / Adres Ekle</button>
-      </div>
-
     </div>
-    <div class="modal-footer">
+
+    <div class="f-row">
+      <label>Etiket / Kısa Başlık <span class="req">*</span></label>
+      <input type="text" id="f-etiket" placeholder="örn: 1000/1000 Hız Yükseltme">
+      <div class="f-hint">Kartın üstünde küçük yazı olarak görünür</div>
+    </div>
+
+    <div class="f-row">
+      <label>Tam Başlık <span class="req">*</span></label>
+      <input type="text" id="f-baslik" placeholder="örn: Download-Upload 1000/1000 MBPS Hız Artırımı — Süreç">
+    </div>
+
+    <div class="f-row">
+      <label>Arama Anahtar Kelimeleri</label>
+      <input type="text" id="f-keywords" placeholder="hız rsmc sem 1gbps upload (boşlukla ayır)">
+      <div class="f-hint">Aramada bu kelimelerle de bulunur</div>
+    </div>
+
+    <div class="f-row">
+      <label>Açıklama / Talep</label>
+      <textarea id="f-aciklama" placeholder="Bu süreç veya konu hakkında kısa açıklama…"></textarea>
+    </div>
+
+    <div class="f-row">
+      <label>İşlem Adımları</label>
+      <div class="steps-builder" id="steps-builder"></div>
+      <button class="add-step-btn" onclick="addStep()">＋ Adım Ekle</button>
+    </div>
+
+    <div class="f-row">
+      <label>⚠️ Uyarı Notu (opsiyonel)</label>
+      <textarea id="f-uyari" placeholder="Dikkat edilmesi gereken önemli nokta…" style="min-height:60px"></textarea>
+    </div>
+
+    <div class="f-row">
+      <label>İlgili Kişiler / E-posta</label>
+      <div class="kisiler-builder" id="kisiler-builder"></div>
+      <button class="add-step-btn" onclick="addKisi()">＋ Kişi / Adres Ekle</button>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <div class="modal-footer-left" id="modal-status"></div>
+    <div class="modal-footer-right">
       <button class="btn-cancel" onclick="closeModal()">İptal</button>
-      <button class="btn-save" onclick="saveCase()">💾 Kaydet</button>
+      <button class="btn-save" id="btn-save" onclick="saveEntry()">💾 Kaydet</button>
     </div>
   </div>
 </div>
+</div>
 
-<!-- ═══════════════════════ JAVASCRIPT ═══════════════════════ -->
 <script>
-const STORAGE_KEY = 'kh_cases_v1';
-let currentCat = 'all';
-let currentQ   = '';
-let editingId  = null;
+// ══════════════════════════════════════════════════
+// ⚙️  BURAYA APPS SCRIPT URL'İNİ YAPISTIR
+// ══════════════════════════════════════════════════
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbXpuwWVr6bC4Q_SfuNQ9n6PMs-80_U6C72LQH3mDMVP9LkNDgxltXLceobJtLrwk/exec';
+// ══════════════════════════════════════════════════
 
-/* ── CAT CONFIG ── */
-const CAT_STYLE = {
-  internet: {bg:'#e8f7f1', color:'#1a7a4a'},
-  pstn:     {bg:'#fef3e8', color:'#b45309'},
-  mobil:    {bg:'#e8f0fd', color:'#0062d6'},
-  iletisim: {bg:'#eef1f5', color:'#475569'},
-  tv:       {bg:'#f3e8ff', color:'#7c3aed'},
-};
-const CAT_LABEL = {
-  internet:'🌐 İnternet', pstn:'📞 PSTN', mobil:'📱 Mobil', iletisim:'💼 İletişim', tv:'📺 TV'
-};
+let ALL_ENTRIES = [];
+let editingId = null;
+let stepCount = 0;
+let kisiCount = 0;
+let activeTab = '';
 
-/* ── STORAGE ── */
-function loadCases(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); }catch(e){ return []; } }
-function saveCases(arr){ localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
+// ── YÜKLE ────────────────────────────────────────
+async function loadEntries() {
+  setSyncDot('loading');
+  document.getElementById('entries-wrap').innerHTML = `
+    <div class="loading-wrap">
+      <div class="spinner"></div>
+      <div>Google Sheets'ten yükleniyor…</div>
+    </div>`;
 
-/* ── RENDER DYNAMIC CARDS ── */
-function renderDynamic(){
-  const cases = loadCases();
-  const container = document.getElementById('dynamicCards');
-  container.innerHTML = '';
-  cases.forEach(c => {
-    const s = CAT_STYLE[c.cat] || CAT_STYLE.iletisim;
-    const stepsHtml = (c.steps||[]).filter(s=>s.trim()).map((s,i)=>`
-      <div class="kh-step">
-        <div class="kh-step-num">${i+1}</div>
-        <div class="kh-step-text"><div class="kh-step-title">${esc(s)}</div></div>
-      </div>`).join('');
-    const contactsHtml = (c.contacts||[]).filter(x=>x.email).map(x=>{
-      const init = (x.name||x.email).replace(/[^a-zA-ZğüşıöçĞÜŞİÖÇ]/g,' ').trim().split(' ').filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join('');
-      return `<a class="contact-pill" href="mailto:${esc(x.email)}"><span class="contact-avatar">${init||'?'}</span>${esc(x.name||x.email)}</a>`;
-    }).join('');
-    const warnHtml = c.warn ? `<div class="kh-warn"><span>⚠️</span><span>${esc(c.warn)}</span></div>` : '';
-    const div = document.createElement('div');
-    div.className = 'card';
-    div.dataset.cat = c.cat;
-    div.dataset.id  = c.id;
-    div.innerHTML = `
-      <div class="card-keywords">${esc(c.keywords||'')}</div>
-      <div class="card-header" onclick="toggleCard(this)">
-        <span class="cat-badge" style="background:${s.bg};color:${s.color};">${esc(c.badge||CAT_LABEL[c.cat]||'')}</span>
-        <span class="card-title">${esc(c.title)} <span class="badge-custom">YENİ</span></span>
-        <span class="card-arrow">›</span>
-      </div>
-      <div class="card-body kh-content">
-        ${c.desc ? `<p class="kh-label">AÇIKLAMA / TALEP</p><div class="kh-desc">${esc(c.desc)}</div>` : ''}
-        ${stepsHtml ? `<p class="kh-label">İŞLEM ADIMLARI</p>${stepsHtml}` : ''}
-        ${warnHtml}
-        ${contactsHtml ? `<p class="kh-label">İLGİLİ EKİPLER</p><div class="kh-contacts">${contactsHtml}</div>` : ''}
-        <div class="card-actions">
-          <button class="btn-edit" onclick="editCase('${c.id}')">✏️ Düzenle</button>
-          <button class="btn-delete" onclick="deleteCase('${c.id}')">🗑️ Sil</button>
-        </div>
+  try {
+    const res = await fetch(`${SCRIPT_URL}?action=getAll`);
+    const json = await res.json();
+
+    if (json.error) throw new Error(json.error);
+
+    ALL_ENTRIES = json.entries || [];
+    document.getElementById('entry-count').textContent = ALL_ENTRIES.length;
+    document.getElementById('last-sync').textContent = new Date().toLocaleTimeString('tr-TR');
+    setSyncDot('ok');
+    render();
+  } catch (e) {
+    setSyncDot('error');
+    document.getElementById('entries-wrap').innerHTML = `
+      <div class="empty">
+        <div class="icon">⚠️</div>
+        <div>Bağlantı hatası: ${e.message}</div>
+        <div style="margin-top:8px;font-size:12px">SCRIPT_URL doğru girildi mi?</div>
       </div>`;
-    container.appendChild(div);
+    toast('Sunucuya bağlanılamadı', 'error');
+  }
+}
+
+// ── RENDER ───────────────────────────────────────
+function render() {
+  const q = document.getElementById('srch').value.trim().toLowerCase();
+  let entries = ALL_ENTRIES;
+
+  if (activeTab) entries = entries.filter(e => e['Kategori'] === activeTab);
+
+  if (q) {
+    entries = entries.filter(e => {
+      const hay = [
+        e['Başlık'], e['Etiket'], e['Açıklama'],
+        e['Anahtar Kelimeler'], e['Ekleyen'],
+        ...(e['Kişiler (JSON)'] || []).map(k => k.isim + ' ' + k.email)
+      ].join(' ').toLowerCase();
+      return hay.includes(q);
+    });
+  }
+
+  const wrap = document.getElementById('entries-wrap');
+
+  if (!entries.length) {
+    wrap.innerHTML = `<div class="empty"><div class="icon">🔍</div><div>"${q || activeTab}" için sonuç bulunamadı</div></div>`;
+    return;
+  }
+
+  wrap.innerHTML = entries.map(e => renderCard(e)).join('');
+}
+
+function renderCard(e) {
+  const id = e['ID'];
+  const kat = e['Kategori'] || '';
+  const etiket = e['Etiket'] || '';
+  const baslik = e['Başlık'] || '';
+  const aciklama = e['Açıklama'] || '';
+  const adimlar = e['Adımlar (JSON)'] || [];
+  const uyari = e['Uyarı'] || '';
+  const kisiler = e['Kişiler (JSON)'] || [];
+  const durum = e['Durum'] || 'taslak';
+  const ekleyen = e['Ekleyen'] || '';
+  const tarih = e['Eklenme Tarihi'] || '';
+  const guncelleyen = e['Güncelleyen'] || '';
+  const guncelleme = e['Güncelleme Tarihi'] || '';
+
+  const adimlarHTML = adimlar.length ? `
+    <div class="section-title">İŞLEM ADIMLARI</div>
+    <div class="steps">
+      ${adimlar.map((a,i) => `
+        <div class="step">
+          <div class="step-no">${i+1}</div>
+          <div class="step-body">
+            <div class="step-text">${escHtml(a.metin || '')}</div>
+            ${a.sorumlu ? `<div class="step-owner">${escHtml(a.sorumlu)}</div>` : ''}
+          </div>
+        </div>`).join('')}
+    </div>` : '';
+
+  const uyariHTML = uyari ? `
+    <div class="warning-box">⚠️ ${escHtml(uyari)}</div>` : '';
+
+  const kisilerHTML = kisiler.length ? `
+    <div class="section-title">İLGİLİ EKİPLER</div>
+    <div class="contacts">
+      ${kisiler.map(k => `
+        <div class="contact-chip">
+          <div class="contact-avatar">${escHtml((k.kisaltma||k.isim||'?').slice(0,2).toUpperCase())}</div>
+          <div class="contact-info">
+            <div class="contact-name">${escHtml(k.isim||'')}</div>
+            <div class="contact-mail"><a href="mailto:${escHtml(k.email||'')}">${escHtml(k.email||'')}</a></div>
+          </div>
+        </div>`).join('')}
+    </div>` : '';
+
+  const metaLine = [
+    ekleyen ? `Ekleyen: <strong>${escHtml(ekleyen)}</strong>` : '',
+    tarih ? `· ${tarih}` : '',
+    guncelleyen ? `· Güncelleme: <strong>${escHtml(guncelleyen)}</strong> ${guncelleme}` : ''
+  ].filter(Boolean).join(' ');
+
+  return `
+  <div class="entry-card" id="card-${id}" data-id="${id}">
+    <div class="entry-header" onclick="toggleCard('${id}')">
+      <div class="entry-title-wrap">
+        <div class="entry-tag">${escHtml(etiket)}</div>
+        <div class="entry-title">${escHtml(kat)} ${escHtml(baslik)}</div>
+        <div class="entry-meta">${metaLine}</div>
+      </div>
+      <div class="entry-badges">
+        <span class="badge b-kat">${escHtml(kat)}</span>
+        <span class="badge ${durum==='onaylı'?'b-onay':'b-taslak'}">${durum==='onaylı'?'✅ Onaylı':'📝 Taslak'}</span>
+      </div>
+      <span class="entry-chevron">▼</span>
+    </div>
+    <div class="entry-body">
+      ${aciklama ? `<div class="section-title">TALEP AÇIKLAMASI</div><div class="desc-text">${escHtml(aciklama)}</div>` : ''}
+      ${adimlarHTML}
+      ${uyariHTML}
+      ${kisilerHTML}
+      <div class="entry-footer">
+        <div class="entry-footer-meta">${metaLine}</div>
+        <div class="entry-actions">
+          <button class="btn-sm btn-edit" onclick="editEntry('${id}',event)">✏️ Düzenle</button>
+          <button class="btn-sm btn-del" onclick="deleteEntry('${id}',event)">🗑</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleCard(id) {
+  document.getElementById('card-' + id)?.classList.toggle('open');
+}
+
+// ── MODAL ────────────────────────────────────────
+function openModal(prefill) {
+  editingId = null;
+  stepCount = 0; kisiCount = 0;
+  document.getElementById('modal-title').textContent = '➕ Yeni Kayıt Ekle';
+  document.getElementById('modal-status').textContent = '';
+  clearForm();
+  if (prefill) fillForm(prefill);
+  document.getElementById('modal-overlay').classList.add('open');
+  // Kaydedilen ismi hatırla
+  const saved = localStorage.getItem('kh_ekleyen');
+  if (saved) document.getElementById('f-ekleyen').value = saved;
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  editingId = null;
+}
+
+function clearForm() {
+  ['f-ekleyen','f-etiket','f-baslik','f-keywords','f-aciklama','f-uyari'].forEach(id => {
+    document.getElementById(id).value = '';
+    document.getElementById(id).classList.remove('err');
   });
-  updateCount();
-  applyFilters();
+  document.getElementById('f-kat').value = '';
+  document.getElementById('f-durum').value = 'onaylı';
+  document.getElementById('steps-builder').innerHTML = '';
+  document.getElementById('kisiler-builder').innerHTML = '';
+  stepCount = 0; kisiCount = 0;
 }
 
-function esc(str){ return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-/* ── TOGGLE ── */
-function toggleCard(header){
-  if(currentQ) return;
-  header.closest('.card').classList.toggle('open');
+function fillForm(e) {
+  document.getElementById('f-kat').value = e['Kategori'] || '';
+  document.getElementById('f-durum').value = e['Durum'] || 'onaylı';
+  document.getElementById('f-etiket').value = e['Etiket'] || '';
+  document.getElementById('f-baslik').value = e['Başlık'] || '';
+  document.getElementById('f-keywords').value = e['Anahtar Kelimeler'] || '';
+  document.getElementById('f-aciklama').value = e['Açıklama'] || '';
+  document.getElementById('f-uyari').value = e['Uyarı'] || '';
+  (e['Adımlar (JSON)'] || []).forEach(a => addStep(a));
+  (e['Kişiler (JSON)'] || []).forEach(k => addKisi(k));
 }
 
-/* ── FILTER ── */
-function filterCat(chip,cat){
-  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-  chip.classList.add('active');
-  currentCat = cat;
-  applyFilters();
-}
-
-const input = document.getElementById('searchInput');
-const clearBtn = document.getElementById('clearBtn');
-input.addEventListener('input',()=>{
-  currentQ = input.value.trim().toLowerCase();
-  clearBtn.style.display = currentQ ? 'block' : 'none';
-  applyFilters();
-});
-function clearSearch(){ input.value=''; currentQ=''; clearBtn.style.display='none'; applyFilters(); document.querySelectorAll('.card').forEach(c=>c.classList.remove('open')); }
-
-function applyFilters(){
-  let visible=0;
-  document.querySelectorAll('.card[data-id]').forEach(card=>{
-    const cat = card.dataset.cat;
-    const txt = card.textContent.toLowerCase();
-    const catOk = currentCat==='all' || cat===currentCat;
-    const qOk   = !currentQ || txt.includes(currentQ);
-    if(catOk && qOk){ card.style.display=''; visible++; if(currentQ) card.classList.add('open'); }
-    else { card.style.display='none'; card.classList.remove('open'); }
-  });
-  document.getElementById('emptyState').style.display = visible===0 ? 'block':'none';
-  const ql = currentQ ? ` · "<strong>${currentQ}</strong>"` : '';
-  document.getElementById('statsCount').innerHTML = `<strong>${visible}</strong> kayıt — ${currentCat==='all'?'tüm kategoriler':currentCat.toUpperCase()}${ql}`;
-}
-
-function updateCount(){
-  const total = document.querySelectorAll('.card[data-id]').length;
-  document.getElementById('statsCount').innerHTML = `<strong>${total}</strong> kayıt yüklendi`;
-}
-
-/* ── MODAL ── */
-function openModal(id=null){
+function editEntry(id, ev) {
+  ev && ev.stopPropagation();
+  const e = ALL_ENTRIES.find(x => x['ID'] === id);
+  if (!e) return;
   editingId = id;
-  document.getElementById('modalTitle').textContent = id ? '✏️ Case Düzenle' : '➕ Yeni Case Ekle';
-  document.getElementById('stepsContainer').innerHTML='';
-  document.getElementById('contactsContainer').innerHTML='';
-  if(id){
-    const c = loadCases().find(x=>x.id===id);
-    if(!c) return;
-    document.getElementById('fCat').value     = c.cat||'iletisim';
-    document.getElementById('fBadge').value   = c.badge||'';
-    document.getElementById('fTitle').value   = c.title||'';
-    document.getElementById('fKeywords').value= c.keywords||'';
-    document.getElementById('fDesc').value    = c.desc||'';
-    document.getElementById('fWarn').value    = c.warn||'';
-    (c.steps||[]).forEach(s=>addStep(s));
-    (c.contacts||[]).forEach(x=>addContact(x.name,x.email));
-  } else {
-    document.getElementById('fCat').value='iletisim';
-    document.getElementById('fBadge').value='';
-    document.getElementById('fTitle').value='';
-    document.getElementById('fKeywords').value='';
-    document.getElementById('fDesc').value='';
-    document.getElementById('fWarn').value='';
-    addStep(); addContact();
-  }
-  document.getElementById('modalOverlay').classList.remove('hidden');
-}
-function closeModal(){ document.getElementById('modalOverlay').classList.add('hidden'); editingId=null; }
-
-function addStep(val=''){
-  const con = document.getElementById('stepsContainer');
-  const idx = con.children.length+1;
-  const row = document.createElement('div');
-  row.className='step-row';
-  row.innerHTML=`<div class="step-num-badge">${idx}</div><input class="step-input" placeholder="Adım ${idx} açıklaması…" value="${val.replace(/"/g,'&quot;')}"/><button class="btn-remove-step" onclick="this.parentNode.remove();reindexSteps()">✕</button>`;
-  con.appendChild(row);
-}
-function reindexSteps(){
-  document.querySelectorAll('#stepsContainer .step-num-badge').forEach((el,i)=>el.textContent=i+1);
+  clearForm();
+  fillForm(e);
+  document.getElementById('modal-title').textContent = '✏️ Kaydı Düzenle';
+  // Güncelleyeni de sor
+  const saved = localStorage.getItem('kh_ekleyen');
+  document.getElementById('f-ekleyen').value = saved || '';
+  document.getElementById('f-ekleyen').placeholder = 'Düzenleyenin adı (zorunlu)';
+  document.getElementById('modal-overlay').classList.add('open');
 }
 
-function addContact(name='',email=''){
-  const con = document.getElementById('contactsContainer');
-  const row = document.createElement('div');
-  row.className='contact-row';
-  row.innerHTML=`<input placeholder="Ad Soyad" value="${name.replace(/"/g,'&quot;')}"/><input placeholder="mail@turktelekom.com.tr" value="${email.replace(/"/g,'&quot;')}"/><button class="btn-remove-contact" onclick="this.parentNode.remove()">✕</button>`;
-  con.appendChild(row);
+// ── ADIM BUILDER ─────────────────────────────────
+function addStep(data) {
+  stepCount++;
+  const n = stepCount;
+  const builder = document.getElementById('steps-builder');
+  const div = document.createElement('div');
+  div.className = 'step-row';
+  div.id = 'step-' + n;
+  div.innerHTML = `
+    <div class="step-num">${n}</div>
+    <input class="step-inp" placeholder="Adım açıklaması…" value="${escHtml(data?.metin||'')}">
+    <input class="step-own" placeholder="Sorumlu ekip" value="${escHtml(data?.sorumlu||'')}">
+    <button class="step-del" onclick="this.parentElement.remove();renumberSteps()">✕</button>`;
+  builder.appendChild(div);
 }
 
-function saveCase(){
-  const title = document.getElementById('fTitle').value.trim();
-  if(!title){ alert('Başlık zorunludur.'); return; }
-  const steps = [...document.querySelectorAll('#stepsContainer .step-input')].map(i=>i.value.trim()).filter(Boolean);
-  const contacts = [...document.querySelectorAll('#contactsContainer .contact-row')].map(row=>{
-    const ins = row.querySelectorAll('input');
-    return {name: ins[0].value.trim(), email: ins[1].value.trim()};
-  }).filter(x=>x.email||x.name);
-  const obj = {
-    id:       editingId || 'c_'+Date.now(),
-    cat:      document.getElementById('fCat').value,
-    badge:    document.getElementById('fBadge').value.trim(),
-    title,
-    keywords: document.getElementById('fKeywords').value.trim(),
-    desc:     document.getElementById('fDesc').value.trim(),
-    warn:     document.getElementById('fWarn').value.trim(),
-    steps, contacts,
-    createdAt: editingId ? undefined : new Date().toISOString()
+function renumberSteps() {
+  document.querySelectorAll('#steps-builder .step-row').forEach((row, i) => {
+    row.querySelector('.step-num').textContent = i + 1;
+  });
+}
+
+// ── KİŞİ BUILDER ─────────────────────────────────
+function addKisi(data) {
+  kisiCount++;
+  const n = kisiCount;
+  const builder = document.getElementById('kisiler-builder');
+  const div = document.createElement('div');
+  div.className = 'kisi-row';
+  div.id = 'kisi-' + n;
+  div.innerHTML = `
+    <input class="kisi-inp" placeholder="Kisaltma (2-3 harf)" style="max-width:60px" value="${escHtml(data?.kisaltma||'')}">
+    <input class="kisi-inp" placeholder="Ad Soyad / Ekip adı" value="${escHtml(data?.isim||'')}">
+    <input class="kisi-inp" placeholder="email@turktelekom.com.tr" value="${escHtml(data?.email||'')}">
+    <button class="kisi-del" onclick="this.parentElement.remove()">✕</button>`;
+  builder.appendChild(div);
+}
+
+// ── KAYDET ───────────────────────────────────────
+async function saveEntry() {
+  const ekleyen = document.getElementById('f-ekleyen').value.trim();
+  const kat = document.getElementById('f-kat').value;
+  const etiket = document.getElementById('f-etiket').value.trim();
+  const baslik = document.getElementById('f-baslik').value.trim();
+
+  // Validasyon
+  let ok = true;
+  if (!ekleyen) { document.getElementById('f-ekleyen').classList.add('err'); ok = false; }
+  else document.getElementById('f-ekleyen').classList.remove('err');
+  if (!kat) { document.getElementById('f-kat').classList.add('err'); ok = false; }
+  else document.getElementById('f-kat').classList.remove('err');
+  if (!etiket) { document.getElementById('f-etiket').classList.add('err'); ok = false; }
+  else document.getElementById('f-etiket').classList.remove('err');
+  if (!baslik) { document.getElementById('f-baslik').classList.add('err'); ok = false; }
+  else document.getElementById('f-baslik').classList.remove('err');
+
+  if (!ok) { toast('Zorunlu alanlar eksik (kırmızı olanlar)', 'error'); return; }
+
+  // İsmi hatırla
+  localStorage.setItem('kh_ekleyen', ekleyen);
+
+  // Adımları topla
+  const adimlar = [...document.querySelectorAll('#steps-builder .step-row')].map(row => ({
+    metin: row.querySelectorAll('input')[0].value.trim(),
+    sorumlu: row.querySelectorAll('input')[1].value.trim()
+  })).filter(a => a.metin);
+
+  // Kişileri topla
+  const kisiler = [...document.querySelectorAll('#kisiler-builder .kisi-row')].map(row => ({
+    kisaltma: row.querySelectorAll('input')[0].value.trim(),
+    isim: row.querySelectorAll('input')[1].value.trim(),
+    email: row.querySelectorAll('input')[2].value.trim()
+  })).filter(k => k.isim || k.email);
+
+  const data = {
+    kategori: kat,
+    etiket,
+    baslik,
+    keywords: document.getElementById('f-keywords').value.trim(),
+    aciklama: document.getElementById('f-aciklama').value.trim(),
+    adimlar,
+    uyari: document.getElementById('f-uyari').value.trim(),
+    kisiler,
+    durum: document.getElementById('f-durum').value,
+    ekleyen,
+    guncelleyen: editingId ? ekleyen : undefined
   };
-  const cases = loadCases();
-  if(editingId){
-    const idx = cases.findIndex(x=>x.id===editingId);
-    if(idx>-1) cases[idx]=obj;
-  } else {
-    cases.push(obj);
+
+  const btn = document.getElementById('btn-save');
+  btn.disabled = true;
+  btn.textContent = '⏳ Kaydediliyor…';
+  document.getElementById('modal-status').textContent = 'Google Sheets\'e yazılıyor…';
+
+  try {
+    const body = editingId
+      ? { action: 'update', id: editingId, data }
+      : { action: 'add', data };
+
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(body)
+    });
+    const json = await res.json();
+
+    if (json.error) throw new Error(json.error);
+
+    toast(editingId ? '✅ Kayıt güncellendi' : '✅ Kayıt eklendi', 'success');
+    closeModal();
+    await loadEntries();
+  } catch (e) {
+    toast('Kaydetme hatası: ' + e.message, 'error');
+    document.getElementById('modal-status').textContent = '⚠️ Hata: ' + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '💾 Kaydet';
   }
-  saveCases(cases);
-  closeModal();
-  renderDynamic();
 }
 
-function editCase(id){ openModal(id); }
+// ── SİL ──────────────────────────────────────────
+async function deleteEntry(id, ev) {
+  ev && ev.stopPropagation();
+  if (!confirm('Bu kaydı silmek istediğinden emin misin?')) return;
 
-function deleteCase(id){
-  if(!confirm('Bu case silinsin mi?')) return;
-  saveCases(loadCases().filter(x=>x.id!==id));
-  renderDynamic();
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'delete', id })
+    });
+    const json = await res.json();
+    if (json.error) throw new Error(json.error);
+    toast('🗑 Kayıt silindi', 'success');
+    await loadEntries();
+  } catch (e) {
+    toast('Silme hatası: ' + e.message, 'error');
+  }
 }
 
-/* ── IMPORT / EXPORT ── */
-function exportJSON(){
-  const data = { builtin:11, custom: loadCases(), exportedAt: new Date().toISOString() };
-  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download=`kurumsal-hafiza-yedek-${new Date().toISOString().slice(0,10)}.json`; a.click();
-}
-function importJSON(e){
-  const file = e.target.files[0]; if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    try{
-      const data = JSON.parse(ev.target.result);
-      const arr = data.custom || data; // both formats
-      if(!Array.isArray(arr)) throw new Error();
-      if(!confirm(`${arr.length} case yüklenecek. Mevcut özel kayıtlar silinecek. Devam?`)) return;
-      saveCases(arr); renderDynamic();
-    } catch(err){ alert('Geçersiz JSON dosyası.'); }
-  };
-  reader.readAsText(file);
-  e.target.value='';
+// ── ARAMA ────────────────────────────────────────
+document.getElementById('srch').addEventListener('input', function() {
+  document.getElementById('clear-btn').style.display = this.value ? 'block' : 'none';
+  render();
+});
+function clearSearch() {
+  document.getElementById('srch').value = '';
+  document.getElementById('clear-btn').style.display = 'none';
+  render();
 }
 
-/* ── INIT ── */
-renderDynamic();
+// ── TABS ─────────────────────────────────────────
+document.getElementById('tabs').addEventListener('click', function(e) {
+  const tab = e.target.closest('.tab');
+  if (!tab) return;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  activeTab = tab.dataset.cat;
+  render();
+});
+
+// ── JSON EXPORT ───────────────────────────────────
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(ALL_ENTRIES, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `kurumsal-hafiza-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+}
+
+// ── SYNC DOT ─────────────────────────────────────
+function setSyncDot(state) {
+  const dot = document.getElementById('sync-dot');
+  dot.className = 'sync-dot' + (state === 'loading' ? ' loading' : state === 'error' ? ' error' : '');
+}
+
+// ── TOAST ────────────────────────────────────────
+let toastTimer;
+function toast(msg, type) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (type ? ' ' + type : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
+}
+
+// ── UTILS ────────────────────────────────────────
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── ESC tuşu ─────────────────────────────────────
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── BAŞLAT ───────────────────────────────────────
+loadEntries();
 </script>
 </body>
 </html>
